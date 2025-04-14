@@ -10,6 +10,16 @@
           "read"
         ]
       }
+    },
+    "/insertUser": {
+      "name": "/insertUser",
+      "lambdaFunction": "insertUser",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create"
+        ]
+      }
     }
   }
 }

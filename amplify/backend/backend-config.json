@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "getUser"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "insertUser"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -62,6 +70,11 @@
       "service": "Lambda"
     },
     "getUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "insertUser": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
