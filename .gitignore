@@ -52,4 +52,6 @@ amplifytools.xcconfig
 team-provider***
 team-provider-info.json
 **venv**
+auto-imports.d.ts
+components.d.ts
 #amplify-do-not-edit-end
