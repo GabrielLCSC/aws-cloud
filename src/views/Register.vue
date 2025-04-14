@@ -48,11 +48,9 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { API } from 'aws-amplify'
+import {post} from '@aws-amplify/api-rest'
 import { message } from 'ant-design-vue'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 
 const form = reactive({
   email: '',
@@ -73,7 +71,7 @@ async function handleSubmit() {
   loading.value = true
 
   try {
-    const response = await API.post('myapi', '/insertUser', {
+    const response = await post('users', '/insertUser', {
       body: {
         email: form.email,
         firstName: form.firstName,
