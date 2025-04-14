@@ -31,7 +31,7 @@
   </template>
   
   <script>
-  import { confirmSignUp, resendSignUpCode } from '@aws-amplify/auth'
+  import { confirmSignUp, resendSignUpCode, autoSignIn } from '@aws-amplify/auth'
   import { message } from 'ant-design-vue'
   
   export default {
@@ -49,6 +49,10 @@
         try {
           await confirmSignUp({ username: this.email, confirmationCode: this.code })
           message.success("✅ Ton compte est confirmé ! Tu peux te connecter.")
+          const { nextStep } = await autoSignIn()
+          if (nextStep.signInStep === 'DONE') {
+                    this.$router.push('/login')
+            }
           this.$router.push('/login')
         } catch (err) {
           console.error('[CONFIRMATION ERROR]', err)

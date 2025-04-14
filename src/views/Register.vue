@@ -79,7 +79,10 @@ async function handleSubmit() {
           email: form.email,
           name: form.firstName,
           family_name: form.lastName
-        }
+        },
+        autoSignIn: {
+          authFlowType: 'USER_AUTH',
+        },
       }
     })
 
