@@ -1,0 +1,25 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - pip3 install --user pipenv virtualenv
+    build:
+      commands:
+        - echo "No frontend build steps needed"
+  artifacts:
+    baseDirectory: /
+    files:
+      - '**/*'
+  cache:
+    paths: []
+
+backend:
+  phases:
+    build:
+      commands:
+        - pip3 install --user pipenv virtualenv
+  artifacts:
+    baseDirectory: amplify
+    files:
+      - '**/*'
