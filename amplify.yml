@@ -3,22 +3,25 @@ frontend:
   phases:
     preBuild:
       commands:
-        - pip3 install --user pipenv virtualenv
+        - npm ci
     build:
       commands:
-        - echo "No frontend build steps needed"
+        - npm run build
   artifacts:
-    baseDirectory: /
+    baseDirectory: dist
     files:
       - '**/*'
   cache:
-    paths: []
-
+    paths:
+      - node_modules/**/*
 backend:
   phases:
-    build:
+    preBuild:
       commands:
         - pip3 install --user pipenv virtualenv
+    build:
+      commands:
+        - echo "Building backend..."
   artifacts:
     baseDirectory: amplify
     files:
