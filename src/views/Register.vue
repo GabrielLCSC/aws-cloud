@@ -48,9 +48,8 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import {post} from '@aws-amplify/api-rest'
+import { signUp } from '@aws-amplify/auth'
 import { message } from 'ant-design-vue'
-
 
 const form = reactive({
   email: '',
@@ -71,29 +70,34 @@ async function handleSubmit() {
   loading.value = true
 
   try {
-    const restOperation = post('users', '/insertUser', {
-      body: {
-        email: form.email,
-        firstName: form.firstName,
-        lastName: form.lastName,
-        password: form.password
+    
+    await signUp({
+      username: form.email,
+      password: form.password,
+      options: {
+        userAttributes: {
+          email: form.email,
+          name: form.firstName,
+          family_name: form.lastName
+        }
       }
     })
 
-    const { body } = await restOperation.response;
-    const response = await body.json();
 
     message.success('🎉 Compte créé avec succès ! Redirection…')
-    console.log('✔️ Réponse backend :', response)
-
+    this.$router.push({ path: '/confirm', query: { email: form.email } })
   } catch (err) {
-    const status = err?.response?.status
-    if (status === 409) {
+    console.error('[SIGNUP ERROR]', err)
+
+    if (err.name === 'InvalidPasswordException') {
+      message.error("🔒 Mot de passe trop faible : 8 caractères minimum.")
+    } else if (err.name === 'UsernameExistsException') {
       message.warning("🚨 Un compte avec cet email existe déjà.")
+    } else if (err.name === 'InvalidParameterException') {
+      message.error("⚠️ Paramètres invalides (ex: email mal formé).")
     } else {
-      message.error("❌ Erreur serveur, réessayez plus tard.")
+      message.error(err.message || '❌ Erreur inconnue')
     }
-    console.error('❌ Erreur :', err)
   } finally {
     loading.value = false
   }

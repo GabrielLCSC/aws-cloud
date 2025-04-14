@@ -3,6 +3,7 @@ import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Dashboard from '../views/Dashboard.vue';
 import auth from '../store/auth';
+import Confirm from '../views/Confirm.vue';
 
 const routes = [
   { path: '/login', name: 'Login', component: Login },
@@ -12,6 +13,11 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard,
     // meta: { requiresAuth: true }
+  },
+  { 
+    path: '/confirm',
+    name: 'Confirm',
+    component: Confirm
   }
 ];
 

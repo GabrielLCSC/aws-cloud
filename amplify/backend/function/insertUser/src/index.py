@@ -45,7 +45,9 @@ def response(status_code, message):
         'headers': {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            'Access-Control-Allow-Credentials': True,
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+            'Access-Control-Allow-Headers': 'Content-Type'
         },
         'body': json.dumps({'message': message})
     }
