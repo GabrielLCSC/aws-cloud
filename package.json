@@ -9,8 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@nuxt/ui": "^3.0.2",
-    "@nuxthq/ui": "^2.7.0",
+    "ant-design-vue": "^4.2.6",
     "bootstrap": "^5.3.5",
     "router": "^2.2.0",
     "unplugin-vue-components": "^28.5.0",
