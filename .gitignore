@@ -50,5 +50,5 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 team-provider***
-venv/**
+**venv**
 #amplify-do-not-edit-end
