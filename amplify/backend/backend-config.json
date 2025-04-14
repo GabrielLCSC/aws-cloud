@@ -1,4 +1,20 @@
 {
+  "api": {
+    "users": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "getUser"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "bigdevopsdef706d0": {
       "customAuth": false,
@@ -52,6 +68,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_bigdevopsdef706d0PostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bigdevopsdef706d0PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_bigdevopsdef706d0PostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bigdevopsdef706d0PostConfirmation"
+        }
+      ]
+    },
     "AMPLIFY_function_getUser_deploymentBucketName": {
       "usedBy": [
         {
