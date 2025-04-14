@@ -71,7 +71,7 @@ async function handleSubmit() {
   loading.value = true
 
   try {
-    const response = await post('users', '/insertUser', {
+    const restOperation = post('users', '/insertUser', {
       body: {
         email: form.email,
         firstName: form.firstName,
@@ -79,6 +79,9 @@ async function handleSubmit() {
         password: form.password
       }
     })
+
+    const { body } = await restOperation.response;
+    const response = await body.json();
 
     message.success('🎉 Compte créé avec succès ! Redirection…')
     console.log('✔️ Réponse backend :', response)
