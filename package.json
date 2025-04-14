@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.2.6",
+    "aws-amplify": "^6.14.2",
     "bootstrap": "^5.3.5",
     "router": "^2.2.0",
     "unplugin-vue-components": "^28.5.0",

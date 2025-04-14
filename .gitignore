@@ -54,4 +54,7 @@ team-provider-info.json
 **venv**
 auto-imports.d.ts
 components.d.ts
+.env
+*.dist-info/
+bcrypt/
 #amplify-do-not-edit-end
