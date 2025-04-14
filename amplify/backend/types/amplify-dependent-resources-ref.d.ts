@@ -1,5 +1,23 @@
 export type AmplifyDependentResourcesAttributes = {
+  "auth": {
+    "bigdevopsdef706d0": {
+      "AppClientID": "string",
+      "AppClientIDWeb": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
+      "UserPoolArn": "string",
+      "UserPoolId": "string",
+      "UserPoolName": "string"
+    }
+  },
   "function": {
+    "bigdevopsdef706d0PostConfirmation": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "getUser": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
