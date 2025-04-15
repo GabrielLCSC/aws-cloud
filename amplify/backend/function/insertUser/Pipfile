@@ -7,7 +7,6 @@ verify_ssl = true
 
 [packages]
 src = {editable = true, path = "./src"}
-bcrypt = "4.2.1"
 boto3 = "*"
 
 [requires]
