@@ -50,6 +50,9 @@
 import { reactive, ref } from 'vue'
 import { signUp } from '@aws-amplify/auth'
 import { message } from 'ant-design-vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const form = reactive({
   email: '',
@@ -85,7 +88,7 @@ async function handleSubmit() {
 
 
     message.success('🎉 Compte créé avec succès ! Redirection…')
-    this.$router.push({ path: '/confirm', query: { email: form.email } })
+    router.push({ path: '/confirm', query: { email: form.email } })
   } catch (err) {
     console.error('[SIGNUP ERROR]', err)
 
