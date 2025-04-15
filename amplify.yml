@@ -1,10 +1,4 @@
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - '# Execute Amplify CLI with the helper script'
-        - amplifyPush --simple
 frontend:
   phases:
     preBuild:
@@ -20,4 +14,16 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-
+backend:
+  phases:
+    preBuild:
+      commands:
+        - pip3 install --user pipenv virtualenv
+    build:
+      commands:
+        - amplifyPush --simple
+        - echo "Building backend..."
+  artifacts:
+    baseDirectory: amplify
+    files:
+      - '**/*'
