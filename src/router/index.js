@@ -2,17 +2,18 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Dashboard from '../views/Dashboard.vue';
-import auth from '../store/auth';
+import { requireAuth } from '../store/requireAuth';
 import Confirm from '../views/Confirm.vue';
+import { requireNoAuth } from '@/store/requireNoAuth';
 
 const routes = [
-  { path: '/login', name: 'Login', component: Login },
+  { path: '/login', name: 'Login', component: Login, beforeEnter: requireNoAuth },
   { path: '/register', name: 'Register', component: Register },
   {
     path: '/',
     name: 'Dashboard',
     component: Dashboard,
-    // meta: { requiresAuth: true }
+    beforeEnter: requireAuth
   },
   { 
     path: '/confirm',
@@ -24,14 +25,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !auth.isAuthenticated()) {
-    next('/login');
-  } else {
-    next();
-  }
 });
 
 export default router;

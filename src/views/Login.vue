@@ -61,8 +61,8 @@ export default {
       this.loading = true
 
       try {
-        const user = await signIn({ username: this.email, password: this.password });
-        message.success(`Bienvenue ${user.username} 👋`);
+        await signIn({ username: this.email, password: this.password });
+        message.success(`Connected`);
       } catch (err) {
         console.error('[LOGIN ERROR]', err);
 
