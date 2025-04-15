@@ -18,7 +18,16 @@ backend:
   phases:
     preBuild:
       commands:
-        - pip3 install --user pipenv virtualenv
+        - sudo dnf install -y wget tar
+        - wget https://github.com/indygreg/python-build-standalone/releases/download/20241206/cpython-3.13.1+20241206-x86_64-unknown-linux-gnu-install_only.tar.gz
+        - tar -xzf cpython-3.13.1+20241206-x86_64-unknown-linux-gnu-install_only.tar.gz
+        - sudo mv python /usr/local/python3.13
+        - ln -sf /usr/local/python3.13/bin/python3.13 /usr/bin/python3
+        - ln -sf /usr/local/python3.13/bin/pip3.13 /usr/bin/pip3
+        - export PATH="/usr/local/python3.13/bin:$PATH"
+        - pip3 install --user pipenv
+        - export PATH=$PATH:/root/.local/bin
+        - amplifyPush --simple
     build:
       commands:
         - amplifyPush --simple
