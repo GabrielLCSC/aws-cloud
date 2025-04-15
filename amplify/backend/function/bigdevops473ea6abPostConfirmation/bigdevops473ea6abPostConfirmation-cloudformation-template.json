@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"13.0.0\",\"stackType\":\"function-Lambda\",\"metadata\":{\"whyContinueWithGen1\":\"Prefer not to answer\"}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"13.0.0\",\"stackType\":\"function-Lambda\",\"metadata\":{\"whyContinueWithGen1\":\"Prefer not to answer\"}}",
   "Parameters": {
     "GROUP": {
       "Type": "String",
@@ -43,6 +43,10 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "functioninsertUserName": {
+      "Type": "String",
+      "Default": "functioninsertUserName"
     }
   },
   "Conditions": {
@@ -67,12 +71,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "bigdevopsdef706d0PostConfirmation",
+            "bigdevops473ea6abPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "bigdevopsdef706d0PostConfirmation",
+                  "bigdevops473ea6abPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -95,6 +99,9 @@
             },
             "GROUP": {
               "Ref": "GROUP"
+            },
+            "FUNCTION_INSERTUSER_NAME": {
+              "Ref": "functioninsertUserName"
             }
           }
         },
@@ -122,12 +129,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "bigdevopsdef706d0PostConfirmation",
+            "bigdevops473ea6abPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "bigdevopsdef706d0PostConfirmation",
+                  "bigdevops473ea6abPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -193,6 +200,57 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "lambda:Create*",
+                "lambda:Put*",
+                "lambda:Add*",
+                "lambda:Get*",
+                "lambda:List*",
+                "lambda:Invoke*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:lambda:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":function:",
+                      {
+                        "Ref": "functioninsertUserName"
+                      }
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }

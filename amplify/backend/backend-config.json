@@ -24,7 +24,7 @@
     }
   },
   "auth": {
-    "bigdevopsdef706d0": {
+    "bigdevops473ea6ab": {
       "customAuth": false,
       "dependsOn": [
         {
@@ -33,7 +33,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "bigdevopsdef706d0PostConfirmation",
+          "resourceName": "bigdevops473ea6abPostConfirmation",
           "triggerProvider": "Cognito"
         }
       ],
@@ -56,7 +56,7 @@
           "EMAIL"
         ],
         "verificationMechanisms": [
-          "EMAIL"
+          "PHONE_NUMBER"
         ]
       },
       "providerPlugin": "awscloudformation",
@@ -64,8 +64,17 @@
     }
   },
   "function": {
-    "bigdevopsdef706d0PostConfirmation": {
+    "bigdevops473ea6abPostConfirmation": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "insertUser"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -76,24 +85,35 @@
     },
     "insertUser": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "users"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_bigdevopsdef706d0PostConfirmation_deploymentBucketName": {
+    "AMPLIFY_function_bigdevops473ea6abPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "bigdevopsdef706d0PostConfirmation"
+          "resourceName": "bigdevops473ea6abPostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_bigdevopsdef706d0PostConfirmation_s3Key": {
+    "AMPLIFY_function_bigdevops473ea6abPostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "bigdevopsdef706d0PostConfirmation"
+          "resourceName": "bigdevops473ea6abPostConfirmation"
         }
       ]
     },

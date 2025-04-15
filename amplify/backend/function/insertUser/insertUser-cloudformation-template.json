@@ -15,6 +15,30 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "apiusersApiName": {
+      "Type": "String",
+      "Default": "apiusersApiName"
+    },
+    "apiusersApiId": {
+      "Type": "String",
+      "Default": "apiusersApiId"
+    },
+    "authbigdevops473ea6abUserPoolId": {
+      "Type": "String",
+      "Default": "authbigdevops473ea6abUserPoolId"
+    },
+    "storageusersName": {
+      "Type": "String",
+      "Default": "storageusersName"
+    },
+    "storageusersArn": {
+      "Type": "String",
+      "Default": "storageusersArn"
+    },
+    "storageusersStreamArn": {
+      "Type": "String",
+      "Default": "storageusersStreamArn"
     }
   },
   "Conditions": {
@@ -69,6 +93,24 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "API_USERS_APINAME": {
+              "Ref": "apiusersApiName"
+            },
+            "API_USERS_APIID": {
+              "Ref": "apiusersApiId"
+            },
+            "AUTH_BIGDEVOPS473EA6AB_USERPOOLID": {
+              "Ref": "authbigdevops473ea6abUserPoolId"
+            },
+            "STORAGE_USERS_NAME": {
+              "Ref": "storageusersName"
+            },
+            "STORAGE_USERS_ARN": {
+              "Ref": "storageusersArn"
+            },
+            "STORAGE_USERS_STREAMARN": {
+              "Ref": "storageusersStreamArn"
             }
           }
         },
@@ -78,7 +120,7 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.8",
+        "Runtime": "python3.13",
         "Layers": [],
         "Timeout": 25
       }
@@ -160,6 +202,57 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PartiQLInsert",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:PartiQLSelect"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storageusersArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storageusersArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }

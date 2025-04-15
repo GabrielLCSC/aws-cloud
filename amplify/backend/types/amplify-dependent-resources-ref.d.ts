@@ -7,18 +7,17 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "auth": {
-    "bigdevopsdef706d0": {
+    "bigdevops473ea6ab": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
-      "IdentityPoolId": "string",
-      "IdentityPoolName": "string",
+      "CreatedSNSRole": "string",
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
     }
   },
   "function": {
-    "bigdevopsdef706d0PostConfirmation": {
+    "bigdevops473ea6abPostConfirmation": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

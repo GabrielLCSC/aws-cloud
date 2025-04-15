@@ -56,32 +56,75 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import LogoutButton from '../components/LogoutButton.vue' // 🧩 à adapter selon ton chemin réel
+import { ref, watch, onMounted } from 'vue'
+import { fetchAuthSession } from '@aws-amplify/auth'
+import { get } from '@aws-amplify/api-rest'
+import { message } from 'ant-design-vue'
+import LogoutButton from '../components/LogoutButton.vue'
 
-const user = {
-  firstName: 'Enzo',
-  lastName: 'Givernaud',
-  email: 'enzo@example.com',
+const user = ref({
+  firstName: '',
+  lastName: '',
+  email: '',
   birthDate: null,
   gender: null,
   politicalSide: null,
   size: null
-}
+})
 
-const gender = ref(user.gender || '')
+const gender = ref('')
 const customGender = ref('')
 
+// 👇 Initialisation au chargement
+onMounted(async () => {
+  try {
+    const session = await fetchAuthSession()
+    const accessToken = session.tokens?.accessToken?.toString()
+
+    console.log('[accessToken]', accessToken) 
+
+    if (!accessToken) {
+      message.error('Utilisateur non connecté')
+      return
+    }
+
+    const response = await get({
+      apiName: 'users',
+      path: '/getUser',
+      options: {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    })
+
+    const { body } = await response.response
+    const data = await body.json()
+
+    user.value = data
+    gender.value = data.gender || ''
+    if (data.gender && !['Homme', 'Femme', 'Non précisé'].includes(data.gender)) {
+      customGender.value = data.gender
+    }
+
+  } catch (error) {
+    console.error('[Dashboard ERROR]', error)
+    message.error("Impossible de charger le profil utilisateur.")
+  }
+})
+
+// ✏️ Watchers pour le champ personnalisé "Autre"
 watch(gender, (val) => {
-  user.gender = val === 'Autre' ? customGender.value : val
+  user.value.gender = val === 'Autre' ? customGender.value : val
 })
 
 watch(customGender, (val) => {
   if (gender.value === 'Autre') {
-    user.gender = val
+    user.value.gender = val
   }
 })
 </script>
+
 
 <style scoped>
 .max-w-2xl {
