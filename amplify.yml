@@ -21,7 +21,7 @@ backend:
         - pip3 install --user pipenv virtualenv
     build:
       commands:
-        - echo "Building backend..."
+        - amplifyPush --simple
   artifacts:
     baseDirectory: amplify
     files:
