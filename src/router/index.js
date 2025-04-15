@@ -7,8 +7,8 @@ import Confirm from '../views/Confirm.vue';
 import { requireNoAuth } from '@/store/requireNoAuth';
 
 const routes = [
-  { path: '/login', name: 'Login', component: Login, beforeEnter: requireNoAuth },
-  { path: '/register', name: 'Register', component: Register },
+  { path: '/login', name: 'Login', component: Login },
+  { path: '/register', name: 'Register', component: Register  },
   {
     path: '/',
     name: 'Dashboard',

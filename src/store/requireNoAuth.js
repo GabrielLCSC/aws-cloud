@@ -9,7 +9,7 @@ export async function requireNoAuth(_to, _from, next) {
         next('/')
     }
   } catch (error) {
-    console.warn('[AUTH GUARD] Not authenticated → redirect to login')
+    console.warn('[AUTH GUARD]authenticated → redirect to login')
     next('/')
   }
 }

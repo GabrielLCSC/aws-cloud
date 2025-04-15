@@ -1,9 +1,12 @@
 <template>
   <div class="max-w-2xl mx-auto mt-10 space-y-8">
-    <div class="flex items-center space-x-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
       <h2 class="text-2xl font-semibold">Mon Profil</h2>
+      <LogoutButton />
     </div>
 
+    <!-- Formulaire -->
     <a-form layout="vertical">
       <a-form-item label="Prénom">
         <a-input v-model:value="user.firstName" />
@@ -54,6 +57,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import LogoutButton from '../components/LogoutButton.vue' // 🧩 à adapter selon ton chemin réel
 
 const user = {
   firstName: 'Enzo',
