@@ -18,7 +18,9 @@ backend:
   phases:
     preBuild:
       commands:
-        - pip3 install --user pipenv virtualenv
+        - curl -sS https://bootstrap.pypa.io/get-pip.py | python3
+        - pip3 install pipenv virtualenv
+        - export PATH="$HOME/.local/bin:$PATH"
     build:
       commands:
         - amplifyPush --simple
