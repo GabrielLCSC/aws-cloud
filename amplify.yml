@@ -1,4 +1,10 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - '# Execute Amplify CLI with the helper script'
+        - amplifyPush --simple
 frontend:
   phases:
     preBuild:
@@ -14,17 +20,4 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-backend:
-  phases:
-    preBuild:
-      commands:
-        - curl -sS https://bootstrap.pypa.io/get-pip.py | python3
-        - pip3 install pipenv virtualenv
-        - export PATH="$HOME/.local/bin:$PATH"
-    build:
-      commands:
-        - amplifyPush --simple
-  artifacts:
-    baseDirectory: amplify
-    files:
-      - '**/*'
+
