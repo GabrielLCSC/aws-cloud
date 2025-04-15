@@ -3,14 +3,14 @@
   "aws_cloud_logic_custom": [
     {
       "name": "users",
-      "endpoint": "https://4hi03himgj.execute-api.eu-west-1.amazonaws.com/bigzoo",
+      "endpoint": "https://4taxeexnuf.execute-api.eu-west-1.amazonaws.com/gabriel",
       "region": "eu-west-1"
     }
   ],
-  "aws_cognito_identity_pool_id": "eu-west-1:53a6320a-301e-4a9b-9a7a-913c643f656b",
+  "aws_cognito_identity_pool_id": "eu-west-1:0a32ce9f-b1f4-422d-802f-24f3149db65a",
   "aws_cognito_region": "eu-west-1",
-  "aws_user_pools_id": "eu-west-1_do54jcRw4",
-  "aws_user_pools_web_client_id": "17td00st96ln2qrieropdg3a8d",
+  "aws_user_pools_id": "eu-west-1_pOF6fHuRG",
+  "aws_user_pools_web_client_id": "vog64suri65nestg1qrdc3o2b",
   "oauth": {},
   "aws_cognito_username_attributes": [
     "EMAIL"
@@ -35,7 +35,7 @@
   "aws_dynamodb_all_tables_region": "eu-west-1",
   "aws_dynamodb_table_schemas": [
     {
-      "tableName": "users-bigzoo",
+      "tableName": "users-gabriel",
       "region": "eu-west-1"
     }
   ]
