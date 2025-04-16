@@ -17,8 +17,9 @@
       </a-form-item>
 
       <a-form-item label="Email">
-        <a-input v-model:value="user.email" type="email" />
+        <p class="ant-input ant-input-disabled">{{ user.email }}</p>
       </a-form-item>
+
 
       <a-divider>Informations supplémentaires</a-divider>
 
@@ -50,7 +51,9 @@
         <a-input-number v-model:value="user.size" :min="0" style="width: 100%" />
       </a-form-item>
 
-      <a-button type="primary" block>Enregistrer</a-button>
+      <a-button type="primary" block @click="handleUpdate" :loading="updating">
+        Enregistrer
+      </a-button>
     </a-form>
   </div>
 </template>
@@ -61,6 +64,9 @@ import { fetchAuthSession } from '@aws-amplify/auth'
 import { get } from '@aws-amplify/api-rest'
 import { message } from 'ant-design-vue'
 import LogoutButton from '../components/LogoutButton.vue'
+import { post } from '@aws-amplify/api-rest'
+
+const updating = ref(false)
 
 const user = ref({
   firstName: '',
@@ -80,8 +86,6 @@ onMounted(async () => {
   try {
     const session = await fetchAuthSession()
     const accessToken = session.tokens?.accessToken?.toString()
-
-    console.log('[accessToken]', accessToken) 
 
     if (!accessToken) {
       message.error('Utilisateur non connecté')
@@ -107,6 +111,40 @@ onMounted(async () => {
     message.error("Impossible de charger le profil utilisateur.")
   }
 })
+
+async function handleUpdate() {
+  updating.value = true
+
+  try {
+    const payload = {
+      firstName: user.value.firstName,
+      lastName: user.value.lastName,
+      birthDate: user.value.birthDate,
+      gender: user.value.gender,
+      politicalSide: user.value.politicalSide,
+      size: user.value.size
+    }
+
+    const response = await post({
+      apiName: 'users',
+      path: '/updateUser',
+      options: {
+        body: payload
+      }
+    })
+
+    const { body } = await response.response
+    const data = await body.json()
+
+    message.success(data.message || '✅ Profil mis à jour !')
+
+  } catch (error) {
+    console.error('[UPDATE ERROR]', error)
+    message.error("❌ Impossible de mettre à jour le profil.")
+  } finally {
+    updating.value = false
+  }
+}
 
 // ✏️ Watchers pour le champ personnalisé "Autre"
 watch(gender, (val) => {

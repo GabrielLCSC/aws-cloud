@@ -17,6 +17,14 @@
           ],
           "category": "function",
           "resourceName": "getUser"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "updateUser"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -109,6 +117,22 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "updateUser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "users"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -157,6 +181,22 @@
         {
           "category": "function",
           "resourceName": "insertUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateUser"
         }
       ]
     }
