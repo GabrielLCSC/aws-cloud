@@ -25,6 +25,22 @@
           ],
           "category": "function",
           "resourceName": "updateUser"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "addAdress"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "deleteAdress"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -72,6 +88,22 @@
     }
   },
   "function": {
+    "addAdress": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "addresses"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "bigdevops473ea6abPostConfirmation": {
       "build": true,
       "dependsOn": [
@@ -83,6 +115,12 @@
           "resourceName": "insertUser"
         }
       ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "deleteAdress": {
+      "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -136,6 +174,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_addAdress_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addAdress"
+        }
+      ]
+    },
+    "AMPLIFY_function_addAdress_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addAdress"
+        }
+      ]
+    },
     "AMPLIFY_function_bigdevops473ea6abPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
@@ -149,6 +203,22 @@
         {
           "category": "function",
           "resourceName": "bigdevops473ea6abPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteAdress_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteAdress"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteAdress_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteAdress"
         }
       ]
     },
@@ -202,6 +272,10 @@
     }
   },
   "storage": {
+    "addresses": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "medias": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",

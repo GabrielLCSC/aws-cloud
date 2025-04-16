@@ -32,6 +32,27 @@
           "update"
         ]
       }
+    },
+    "/addAdress": {
+      "name": "/addAdress",
+      "lambdaFunction": "addAdress",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read"
+        ]
+      }
+    },
+    "/deleteAdress": {
+      "name": "/deleteAdress",
+      "lambdaFunction": "deleteAdress",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "delete"
+        ]
+      }
     }
   }
 }

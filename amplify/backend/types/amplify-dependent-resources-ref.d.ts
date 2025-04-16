@@ -19,7 +19,21 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "addAdress": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "bigdevops473ea6abPostConfirmation": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "deleteAdress": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
@@ -49,6 +63,16 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
+    "addresses": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "SortKeyName": "string",
+      "SortKeyType": "string",
+      "StreamArn": "string"
+    },
     "medias": {
       "BucketName": "string",
       "Region": "string"

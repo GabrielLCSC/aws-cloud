@@ -5,6 +5,8 @@ import json
 dynamodb = boto3.resource('dynamodb')
 table_name = os.environ.get('STORAGE_USERS_NAME', 'users')
 table = dynamodb.Table(table_name)
+addresses_table_name = os.environ.get('STORAGE_ADRESSES_NAME', 'adresses')
+addresses_table = dynamodb.Table(addresses_table_name)
 
 def response(status_code, body):
     return {
@@ -29,6 +31,16 @@ def handler(event, context):
 
         if 'Item' not in result:
             return response(404, {"message": "Utilisateur non trouvé."})
+        
+        addresses_result = addresses_table.query(
+            IndexName=None,
+            KeyConditionExpression=boto3.dynamodb.conditions.Key('user_id').eq(user_id)
+        )
+
+        addresses = addresses_result.get('Items', [])
+        print("[getUser] DynamoDB addresses result:", addresses)
+
+        result['addresses'] = addresses
 
         return response(200, result['Item'])
 
