@@ -2,7 +2,7 @@
   <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
     <div class="w-100 px-3" style="max-width: 500px">
       <div class="bg-white p-4 rounded shadow">
-        <h2 class="text-center mb-4">Connexion</h2>
+        <h2 class="text-center mb-4 text-red-600">Connexion</h2>
 
         <form @submit.prevent="handleLogin">
           <div class="mb-3">
