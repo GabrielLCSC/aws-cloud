@@ -1,6 +1,8 @@
 {
   "version": "1",
   "cognitoConfig": {
+    "identityPoolName": "bigdevops473ea6ab_identitypool_cf1a82bd",
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "bigdev473ea6ab",
     "userPoolName": "bigdevops473ea6ab_userpool_473ea6ab",
     "autoVerifiedAttributes": [
@@ -35,7 +37,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "473ea6ab",
     "resourceName": "bigdevops473ea6ab",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "usernameAttributes": [
       "email"
@@ -80,7 +82,9 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"bigdevops473ea6abPostConfirmation\"\n  }\n]",
+    "authTriggerConnections": [
+      "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"bigdevops473ea6abPostConfirmation\"}"
+    ],
     "permissions": []
   }
 }

@@ -91,11 +91,6 @@ onMounted(async () => {
     const response = await get({
       apiName: 'users',
       path: '/getUser',
-      options: {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
     })
 
     const { body } = await response.response

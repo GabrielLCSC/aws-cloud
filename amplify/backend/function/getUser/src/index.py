@@ -21,12 +21,14 @@ def handler(event, context):
     try:
         print("[getUser] Event received:", event)
 
-        claims = event['requestContext']['authorizer']['jwt']['claims']
-        user_id = claims['sub']
-        print("[getUser] user_id:", user_id)
+        # ✅ Récupérer le user_id depuis Cognito Identity Pool
+        user_id = event['requestContext']['identity']['cognitoAuthenticationProvider'].split(':CognitoSignIn:')[1].split('/')[0]
+        print(f"[getUser] user_id: {user_id}")
 
+        # ✅ Récupérer l'utilisateur depuis DynamoDB
         result = table.get_item(Key={'id': user_id})
-        print("result", result)
+        print("[getUser] DynamoDB result:", result)
+
         if 'Item' not in result:
             return response(404, {"message": "Utilisateur non trouvé."})
 
