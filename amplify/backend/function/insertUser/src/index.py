@@ -38,7 +38,7 @@ def handler(event, context):
             'birthDate': None,
             'gender': None,
             'politicalSide': None,
-            'size': None
+            'size': None,
             'avatar': None
         })
 
