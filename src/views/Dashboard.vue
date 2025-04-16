@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-2xl mx-auto mt-10 space-y-8">
+  <div class="max-w-2xl mx-auto mt-10 space-y-8 relative z-10 bg-[#131313] p-6 text-white">
     <!-- Header -->
     <div class="flex items-center justify-between">
       <h2 class="text-2xl font-semibold">Mon Profil</h2>
@@ -7,21 +7,31 @@
     </div>
 
     <!-- Formulaire -->
-    <a-form layout="vertical">
-      <a-form-item label="Prénom">
-        <a-input v-model:value="user.firstName" />
-      </a-form-item>
+     <a-form layout="vertical">
 
-      <a-form-item label="Nom">
-        <a-input v-model:value="user.lastName" />
-      </a-form-item>
+      <InputForm 
+        v-model:value="user.firstName"
+        type="text"
+        text="Prénom"
+      />
 
-      <a-form-item label="Email">
-        <p class="ant-input ant-input-disabled">{{ user.email }}</p>
-      </a-form-item>
+      <InputForm 
+        v-model:value="user.lastName"
+        type="text"
+        text="Nom"
+      />
+      
+      <InputForm 
+        v-model:value="user.email"
+        type="email"
+        text="Email"
+        :disabled="true"
+        
+        class="readonly-style"
+      />
 
 
-      <a-divider>Informations supplémentaires</a-divider>
+      <h2 class="text-white text-2xl font-semibold">Informations supplémentaires</h2>
 
       <a-form-item label="Date de naissance">
         <a-date-picker
@@ -163,4 +173,15 @@ watch(customGender, (val) => {
 .max-w-2xl {
   max-width: 42rem;
 }
+
+
+
+*, body{
+  /* color: white !important; */
+}
+
+/* .readonly-style {
+  pointer-events: none;
+  opacity: 0.5;
+} */
 </style>
