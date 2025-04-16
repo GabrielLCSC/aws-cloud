@@ -20,6 +20,18 @@
           "read"
         ]
       }
+    },
+    "/updateUser": {
+      "name": "/updateUser",
+      "lambdaFunction": "updateUser",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update"
+        ]
+      }
     }
   }
 }

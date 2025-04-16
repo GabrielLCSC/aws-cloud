@@ -21,11 +21,9 @@ def handler(event, context):
     try:
         print("[getUser] Event received:", event)
 
-        # ✅ Récupérer le user_id depuis Cognito Identity Pool
         user_id = event['requestContext']['identity']['cognitoAuthenticationProvider'].split(':CognitoSignIn:')[1].split('/')[0]
         print(f"[getUser] user_id: {user_id}")
 
-        # ✅ Récupérer l'utilisateur depuis DynamoDB
         result = table.get_item(Key={'id': user_id})
         print("[getUser] DynamoDB result:", result)
 
