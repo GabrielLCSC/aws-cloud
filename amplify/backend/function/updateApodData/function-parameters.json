@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "storage": {
+      "nasaapod": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "nasaApiKey",
+      "environmentVariableName": "NASA_API_KEY"
+    }
+  ]
+}

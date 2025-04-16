@@ -1,5 +1,10 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
+    "nasa": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "users": {
       "ApiId": "string",
       "ApiName": "string",
@@ -40,6 +45,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "getApodData": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "getUser": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -49,6 +61,14 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "insertUser": {
       "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "updateApodData": {
+      "Arn": "string",
+      "CloudWatchEventRule": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
@@ -76,6 +96,14 @@ export type AmplifyDependentResourcesAttributes = {
     "medias": {
       "BucketName": "string",
       "Region": "string"
+    },
+    "nasaapod": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "StreamArn": "string"
     },
     "users": {
       "Arn": "string",

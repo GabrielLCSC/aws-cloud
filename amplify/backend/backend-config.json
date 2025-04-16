@@ -1,5 +1,19 @@
 {
   "api": {
+    "nasa": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "getApodData"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "users": {
       "dependsOn": [
         {
@@ -134,6 +148,22 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "getApodData": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "nasaapod"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "getUser": {
       "build": true,
       "dependsOn": [
@@ -170,6 +200,22 @@
           ],
           "category": "storage",
           "resourceName": "users"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "updateApodData": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "nasaapod"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -241,6 +287,22 @@
         }
       ]
     },
+    "AMPLIFY_function_getApodData_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getApodData"
+        }
+      ]
+    },
+    "AMPLIFY_function_getApodData_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getApodData"
+        }
+      ]
+    },
     "AMPLIFY_function_getUser_deploymentBucketName": {
       "usedBy": [
         {
@@ -273,6 +335,30 @@
         }
       ]
     },
+    "AMPLIFY_function_updateApodData_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateApodData"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateApodData_nasaApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateApodData"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateApodData_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateApodData"
+        }
+      ]
+    },
     "AMPLIFY_function_updateUser_deploymentBucketName": {
       "usedBy": [
         {
@@ -299,6 +385,10 @@
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
+    },
+    "nasaapod": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     },
     "users": {
       "providerPlugin": "awscloudformation",

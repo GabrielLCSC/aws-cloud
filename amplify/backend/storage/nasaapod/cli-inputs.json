@@ -1,0 +1,10 @@
+{
+  "resourceName": "nasaapod",
+  "tableName": "nasaapod",
+  "partitionKey": {
+    "fieldName": "date",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

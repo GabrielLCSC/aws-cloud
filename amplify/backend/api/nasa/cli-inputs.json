@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/getApodData": {
+      "name": "/getApodData",
+      "lambdaFunction": "getApodData",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    }
+  }
+}

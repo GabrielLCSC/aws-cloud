@@ -5,6 +5,7 @@ import Dashboard from '../views/Dashboard.vue';
 import { requireAuth } from '../store/requireAuth';
 import Confirm from '../views/Confirm.vue';
 import { requireNoAuth } from '@/store/requireNoAuth';
+import Apod from '@/views/Apod.vue';
 
 const routes = [
   { path: '/login', name: 'Login', component: Login },
@@ -19,6 +20,11 @@ const routes = [
     path: '/confirm',
     name: 'Confirm',
     component: Confirm
+  },
+  { 
+    path: '/apod',
+    name: 'Apod',
+    component: Apod
   }
 ];
 
