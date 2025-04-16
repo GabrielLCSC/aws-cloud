@@ -1,37 +1,21 @@
 <template>
-  <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="relative z-10 min-vh-100 d-flex align-items-center justify-content-center">
     <div class="w-100 px-3" style="max-width: 500px">
-      <div class="bg-white p-4 rounded shadow">
-        <h2 class="text-center mb-4 text-red-600">Connexion</h2>
+      <div class="background-color p-4 rounded shadow">
+        <div class="flex items-center justify-center gap-2 text-white mb-4">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-4-4l4-4m0 0l-4-4m4 4H3" />
+  </svg>
+  <h2 class="text-xl font-semibold">Connexion</h2>
+</div>
 
         <form @submit.prevent="handleLogin">
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input
-              v-model="email"
-              type="email"
-              class="form-control"
-              required
-            />
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Mot de passe</label>
-            <input
-              v-model="password"
-              type="password"
-              class="form-control"
-              required
-            />
-          </div>
-
-          <button type="submit" class="btn btn-primary w-100" :disabled="loading">
-            <span v-if="loading">Connexion...</span>
-            <span v-else>Se connecter</span>
-          </button>
+          <InputForm v-model="email" type="email" text="Email" />
+          <InputForm v-model="password" type="password" text="Mot de passe" />
+          <LoginButton class="mt-4" :loading="loading" />
         </form>
 
-        <p class="mt-3 text-center">
+        <p class="text-white mt-3 text-center">
           Pas encore de compte ?
           <router-link to="/register" class="text-primary text-decoration-none ms-1">
             Inscris-toi
@@ -46,6 +30,8 @@
 import { signIn } from '@aws-amplify/auth'
 import { message } from 'ant-design-vue'
 import { useRouter } from 'vue-router';
+import LoginButton from '../components/LoginButton.vue'
+import InputForm from '@/components/InputForm.vue';
 
 const router = useRouter()
 
@@ -87,3 +73,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.background-color {
+  background-color: #131313;
+}
+
+</style>
