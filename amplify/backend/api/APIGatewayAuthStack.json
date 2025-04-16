@@ -544,7 +544,7 @@
                           }
                         ]
                       },
-                      "/DELETE/deleteAdress/*"
+                      "/*/deleteAdress/*"
                     ]
                   ]
                 },
@@ -574,7 +574,7 @@
                           }
                         ]
                       },
-                      "/DELETE/deleteAdress"
+                      "/*/deleteAdress"
                     ]
                   ]
                 }

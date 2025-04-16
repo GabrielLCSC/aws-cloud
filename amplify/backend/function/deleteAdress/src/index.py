@@ -3,7 +3,7 @@ import os
 import json
 
 dynamodb = boto3.resource('dynamodb')
-table_name = os.environ.get('STORAGE_ADRESSES_NAME')
+table_name = os.environ.get('STORAGE_ADDRESSES_NAME')
 table = dynamodb.Table(table_name)
 
 def response(status_code, body):
@@ -18,6 +18,7 @@ def response(status_code, body):
     }
 
 def handler(event, context):
+    print("[deleteAddress] Event received:", event)
     try:
         print("[deleteAddress] Event received:", event)
 
@@ -37,7 +38,7 @@ def handler(event, context):
         if not address_id:
             return response(400, {"message": "L'identifiant de l'adresse est requis."})
 
-        result = table.get_item(Key={"id": address_id})
+        result = table.get_item(Key={"address_id": address_id, "user_id": user_id})
         item = result.get("Item")
 
         if not item:
@@ -46,7 +47,7 @@ def handler(event, context):
         if item["user_id"] != user_id:
             return response(403, {"message": "Action non autorisée pour cette adresse."})
 
-        table.delete_item(Key={"id": address_id})
+        table.delete_item(Key={"address_id": address_id, "user_id": user_id})
 
         return response(200, {"message": "Adresse supprimée avec succès."})
 

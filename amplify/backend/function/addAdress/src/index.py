@@ -5,7 +5,7 @@ import uuid
 from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource("dynamodb")
-table_name = os.environ.get("STORAGE_ADRESSES_NAME")
+table_name = os.environ.get("STORAGE_ADDRESSES_NAME")
 table = dynamodb.Table(table_name)
 
 def response(status_code, body):
@@ -42,7 +42,7 @@ def handler(event, context):
             return response(400, {"message": "Données d'adresse manquantes ou invalides."})
 
         existing_addresses = table.query(
-            IndexName="user_id-index",
+            IndexName="user_ids",
             KeyConditionExpression=Key("user_id").eq(user_id)
         )
 
@@ -53,7 +53,7 @@ def handler(event, context):
         address_id = str(uuid.uuid4())
 
         item = {
-            "id": address_id,
+            "address_id": address_id,
             "user_id": user_id,
             **address_data
         }

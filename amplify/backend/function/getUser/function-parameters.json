@@ -3,7 +3,15 @@
   "permissions": {
     "storage": {
       "users": [
-        "read"
+        "create",
+        "read",
+        "update"
+      ],
+      "addresses": [
+        "create",
+        "read",
+        "update",
+        "delete"
       ]
     }
   }

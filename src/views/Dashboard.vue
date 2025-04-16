@@ -66,7 +66,7 @@
       <p class="font-semibold">{{ address.street }}</p>
       <p>{{ address.zipCode }} {{ address.city }}, {{ address.country }}</p>
     </div>
-    <a-button type="text" danger @click="handleDeleteAddress(address.id)">
+    <a-button type="text" danger @click="handleDeleteAddress(address.address_id)">
       Supprimer
     </a-button>
   </div>
@@ -139,7 +139,6 @@ const gender = ref('')
 const customGender = ref('')
 
 onMounted(async () => {
-  addresses.value = data.addresses || []
 
   try {
     const session = await fetchAuthSession()
@@ -158,6 +157,8 @@ onMounted(async () => {
     const { body } = await response.response
     const data = await body.json()
 
+    console.log({data})
+
     // 🧠 avatar est un path (ex: public/avatars/xxx.jpg)
     if (data.avatar) {
       const { url } = await getUrl({
@@ -170,6 +171,8 @@ onMounted(async () => {
       })
       data.avatar = url
     }
+
+    addresses.value = data.addresses || []
 
     user.value = data
     gender.value = data.gender || ''
@@ -278,14 +281,15 @@ async function handleAddAddress() {
       return message.warning("Tous les champs doivent être remplis.")
     }
 
+    console.log({payload})
+
     const res = await post({
       apiName: 'users',
-      path: '/addAddress',
+      path: '/addAdress',
       options: {
         body: payload
       }
     })
-
     const { body } = await res.response
     const data = await body.json()
 
@@ -301,10 +305,11 @@ async function handleAddAddress() {
 }
 
 async function handleDeleteAddress(id) {
+  console.log({id})
   try {
     const res = await post({
       apiName: 'users',
-      path: '/deleteAddress',
+      path: '/deleteAdress',
       options: {
         body: { id }
       }
@@ -313,7 +318,8 @@ async function handleDeleteAddress(id) {
     const { body } = await res.response
     const data = await body.json()
 
-    addresses.value = addresses.value.filter(addr => addr.id !== id)
+    addresses.value = addresses.value.filter(addr => addr.address_id !== id)
+
     message.success(data.message || "✅ Supprimée avec succès.")
   } catch (error) {
     console.error('[DELETE ADDRESS ERROR]', error)

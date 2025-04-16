@@ -120,7 +120,17 @@
     },
     "deleteAdress": {
       "build": true,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "addresses"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -135,6 +145,15 @@
           ],
           "category": "storage",
           "resourceName": "users"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "addresses"
         }
       ],
       "providerPlugin": "awscloudformation",
