@@ -5,6 +5,26 @@
       <h2 class="text-2xl font-semibold">Mon Profil</h2>
       <LogoutButton />
     </div>
+    <a-form-item label="avatar">
+  <div class="flex items-center space-x-4">
+    <img
+      v-if="user.avatar"
+      :src="user.avatar"
+      alt="avatar"
+      class="w-16 h-16 rounded-full object-cover border"
+    />
+    <a-upload
+      :before-upload="handleUpload"
+      :show-upload-list="false"
+      accept="image/*"
+    >
+      <a-button>Changer l'avatar</a-button>
+    </a-upload>
+  </div>
+</a-form-item>
+
+
+
 
     <!-- Formulaire -->
     <a-form layout="vertical">
@@ -75,13 +95,13 @@ const user = ref({
   birthDate: null,
   gender: null,
   politicalSide: null,
-  size: null
+  size: null,
+  avatar: null
 })
 
 const gender = ref('')
 const customGender = ref('')
 
-// 👇 Initialisation au chargement
 onMounted(async () => {
   try {
     const session = await fetchAuthSession()
@@ -146,7 +166,6 @@ async function handleUpdate() {
   }
 }
 
-// ✏️ Watchers pour le champ personnalisé "Autre"
 watch(gender, (val) => {
   user.value.gender = val === 'Autre' ? customGender.value : val
 })
@@ -156,6 +175,53 @@ watch(customGender, (val) => {
     user.value.gender = val
   }
 })
+
+import { uploadData, getUrl } from 'aws-amplify/storage'
+import { v4 as uuid } from 'uuid'
+
+async function handleUpload(file) {
+  try {
+    const extension = file.name.split('.').pop()
+    const key = `public/avatars/${user.value.id || uuid()}.${extension}`
+
+    const uploadTask = uploadData({
+      path: key,
+      data: file,
+      options: {
+        contentType: file.type,
+      }
+    })
+
+    const result = await uploadTask.result
+
+    const { url } = await getUrl({
+      path: result.path,
+      options: { level: 'protected', validateObjectExistence: true }
+    })
+
+    user.value.avatar = url
+
+    await post({
+      apiName: 'users',
+      path: '/updateUser',
+      options: {
+        body: { avatar: url }
+      }
+    })
+
+    message.success("✅ Avatar mis à jour !")
+  } catch (error) {
+    console.error('[UPLOAD ERROR]', error)
+    message.error('❌ Erreur lors de l’upload')
+  }
+
+  return false
+}
+
+
+
+
+
 </script>
 
 
