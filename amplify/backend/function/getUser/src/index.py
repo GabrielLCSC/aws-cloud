@@ -1,6 +1,12 @@
 import boto3
 import os
 import json
+from decimal import Decimal
+
+def custom_encoder(obj):
+    if isinstance(obj, Decimal):
+        return int(obj) if obj % 1 == 0 else float(obj)
+    raise TypeError(f"Type {type(obj)} not serializable")
 
 dynamodb = boto3.resource('dynamodb')
 table_name = os.environ.get('STORAGE_USERS_NAME', 'users')
@@ -16,7 +22,7 @@ def response(status_code, body):
             "Access-Control-Allow-Headers": "*",
             "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
         },
-        "body": json.dumps(body)
+        "body": json.dumps(body, default=custom_encoder)
     }
 
 def handler(event, context):
