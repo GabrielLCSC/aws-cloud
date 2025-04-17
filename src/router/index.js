@@ -14,7 +14,7 @@ const routes = [
     path: '/',
     name: 'Dashboard',
     component: Dashboard,
-    // beforeEnter: requireAuth
+    beforeEnter: requireAuth
   },
   { 
     path: '/confirm',
