@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-2xl mx-auto mt-10 space-y-8 relative z-10 bg-[#131313] p-6 text-white">
+  <div class="max-w-2xl mx-auto mt-10 space-y-8 relative z-10 bg-[#131313] p-6 text-white popo">
     <!-- Header -->
     <div class="flex items-center justify-between">
       <h2 class="text-2xl font-semibold">Mon Profil</h2>
@@ -327,6 +327,10 @@ watch(customGender, val => {
   max-width: 42rem;
 }
 
+.popo{
+  max-height: 700px;
+  overflow-y: auto;
+}
 
 
 *, body{
