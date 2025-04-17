@@ -1,7 +1,7 @@
 <template>
     <button class="codepen-button">
         <span v-if="loading">Connexion...</span>
-        <span v-else>Se connecter</span>
+        <span v-else>{{ text }}</span>
     </button>
 </template>
 <script>
@@ -10,6 +10,9 @@
   props: {
     loading: {
       type: Boolean,
+    },
+    text: {
+      type: String,
     }
   }
 }

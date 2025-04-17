@@ -6,7 +6,8 @@
         v-model="inputValue"
         :type="type"
         class="textInput"
-        required
+        feat-register-style
+        :required="required"
         :disabled="disabled"
       />
     </div>
@@ -19,6 +20,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    required: {
+      type: Boolean,
+      default: true,
     },
     type: {
       type: String,

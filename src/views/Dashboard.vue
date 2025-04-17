@@ -154,7 +154,6 @@ onMounted(async () => {
   }
 })
 
-
 async function handleUpdate() {
   updating.value = true
 

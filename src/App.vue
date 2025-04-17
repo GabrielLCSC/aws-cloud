@@ -47,14 +47,6 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-blur-blo
   height: 100%;
 }
 
-@keyframes thingy {
-  0% {
-    filter: var(--f) hue-rotate(0deg);
-  }
-  to {
-    filter: var(--f) hue-rotate(1turn);
-  }
-}
 
 .container-custom::before {
   content: "";
@@ -88,32 +80,6 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-blur-blo
     1159px 340px,
     1017px 831px,
     313px 977px;
-}
-
-@keyframes blobs-1e28bd3d {
-  0% {
-    background-position:
-      271px 478px,
-      62px 291px,
-      67px 861px,
-      553px 413px,
-      36px 392px,
-      1077px 226px,
-      400px 799px,
-      7px 264px;
-  }
-
-  to {
-    background-position:
-      -14975px -2978px,
-      31112px 11187px,
-      -20081px 8981px,
-      11609px -3952px,
-      -12760px 12492px,
-      -9354px 2946px,
-      9553px 21574px,
-      946px 9057px;
-  }
 }
 
 </style>
