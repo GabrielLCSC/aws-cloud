@@ -65,7 +65,7 @@
 
         <!-- Genre -->
         <a-form-item label="Genre">
-    <a-radio-group v-model:value="gender" class="custom-radio-group">
+    <a-radio-group v-model="gender" class="custom-radio-group">
       <a-radio value="Homme">Homme</a-radio>
       <a-radio value="Femme">Femme</a-radio>
       <a-radio value="Non précisé">Non précisé</a-radio>
@@ -73,7 +73,7 @@
     </a-radio-group>
     <div v-if="gender === 'Autre'" class="mt-2">
       <InputForm 
-        v-model:value="user.customGender"
+        v-model="user.customGender"
         type="text"
         text="Votre genre"
       />    
@@ -81,12 +81,12 @@
   </a-form-item>
 
         <InputForm 
-        v-model:value="user.politicalSide"
+        v-model="user.politicalSide"
         type="text"
         text="Orientation politique"/>
 
         <InputForm 
-        v-model:value="user.size"
+        v-model="user.size"
         type="number"
         text="Taille (cm)"
 
@@ -100,10 +100,10 @@
         <!-- Nouvelle adresse -->
         <a-form-item label="Ajouter une nouvelle adresse">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <InputForm v-model:value="newAddress.street" type="text" text="Rue"/>
-            <InputForm v-model:value="newAddress.city" type="text" text="Ville"/>
-            <InputForm v-model:value="newAddress.zipCode" type="text" text="Code postal"/>
-            <InputForm v-model:value="newAddress.country" type="text" text="Pays"/>
+            <InputForm v-model="newAddress.street" type="text" text="Rue"/>
+            <InputForm v-model="newAddress.city" type="text" text="Ville"/>
+            <InputForm v-model="newAddress.zipCode" type="text" text="Code postal"/>
+            <InputForm v-model="newAddress.country" type="text" text="Pays"/>
 
           </div>
           <a-button
@@ -164,14 +164,14 @@ const uploading = ref(false)
 const addingAddress = ref(false)
 const deletingId = ref(null)
 
-const addresses = ref([])
-const newAddress = ref({ street: '', city: '', zipCode: '', country: '' })
+const addresses = ref([{ street: 'Moxouris', city: 'Versailles', zipCode: '78000', country: 'France' }, { street: 'e', city: 'e', zipCode: 'e', country: 'e' }])
+const newAddress = ref({ street: 'e', city: 'e', zipCode: 'e', country: 'e' })
 
 const user = ref({
   firstName: 'alban',
   lastName: 'de braquilanges',
   email: 'a@gmail.com',
-  birthDate: 16./10/1998,
+  birthDate: "",
   gender: "F",
   politicalSide: "Droite",
   size: 180,
