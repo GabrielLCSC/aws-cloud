@@ -208,9 +208,9 @@ const user = ref({
   firstName: '',
   lastName: '',
   email: '',
-  birthDate: "",
-  gender: "",
-  politicalSide: "",
+  birthDate: '',
+  gender: '',
+  politicalSide: '',
   size: '0',
   avatar: null,
 })
@@ -220,68 +220,48 @@ const customGender = ref('')
 
 onMounted(async () => {
   try {
-  
+    const session = await fetchAuthSession()
+    const accessToken = session.tokens?.accessToken?.toString()
+    if (!accessToken) throw new Error('Utilisateur non connecté')
 
-  const session = await fetchAuthSession()
-  const accessToken = session.tokens?.accessToken?.toString()
-
-  if (!accessToken) throw new Error('Utilisateur non connecté')
-  loadingUser.value = true
-
-  const response = await get({ apiName: 'users', path: '/getUser' })
-  const { body } = await response.response
-  const data = await body.json()
-
-  addresses.value = Array.isArray(data.addresses) ? data.addresses : []
-
-  user.value = {
-    ...user.value,
-    ...data,
-    birthDate: data.birthDate ? dayjs(data.birthDate).format('YYYY-MM-DD') : '',
-    size: data.size ? String(data.size) : '0'
-  }
-
-  gender.value = data.gender || ''
-  if (gender.value && !['Homme', 'Femme', 'Non précisé'].includes(gender.value)) {
-    customGender.value = gender.value
-  }
-
-} catch (err) {
-  console.error('[getUser] error:', err)
-  message.error("Impossible de charger le profil utilisateur.")
-} finally {
-  loadingUser.value = false
-}
-
-})
-
-async function handleUpdate() {
-  updating.value = true
-  try {
-    const payload = {
-      firstName: user.value.firstName,
-      lastName: user.value.lastName,
-      birthDate: user.value.birthDate,
-      gender: user.value.gender,
-      politicalSide: user.value.politicalSide,
-      size: user.value.size
-    }
-
-    const response = await post({
-      apiName: 'users',
-      path: '/updateUser',
-      options: { body: payload }
-    })
-
+    loadingUser.value = true
+    const response = await get({ apiName: 'users', path: '/getUser' })
     const { body } = await response.response
     const data = await body.json()
-    message.success(data.message || '✅ Profil mis à jour !')
-  } catch {
-    message.error("❌ Impossible de mettre à jour le profil.")
+
+    addresses.value = Array.isArray(data.addresses) ? data.addresses : []
+
+    // 👇 Vérifie si avatar est un path vers S3, puis le convertit en URL
+    if (data.avatar && !data.avatar.startsWith('https')) {
+      try {
+        const { url } = await getUrl({
+          path: data.avatar,
+          options: { level: 'public', validateObjectExistence: true, expiresIn: 3600 },
+        })
+        data.avatar = url
+      } catch (err) {
+        console.warn('⚠️ Impossible de récupérer l’avatar S3 :', err)
+      }
+    }
+
+    user.value = {
+      ...user.value,
+      ...data,
+      birthDate: data.birthDate ? dayjs(data.birthDate).format('YYYY-MM-DD') : '',
+      size: data.size ? String(data.size) : '0',
+    }
+
+    gender.value = data.gender || ''
+    if (gender.value && !['Homme', 'Femme', 'Non précisé'].includes(gender.value)) {
+      customGender.value = gender.value
+    }
+  } catch (err) {
+    console.error('[getUser] error:', err)
+    message.error("Impossible de charger le profil utilisateur.")
   } finally {
-    updating.value = false
+    loadingUser.value = false
   }
-}
+})
 
 async function handleUpload(file) {
   try {
@@ -289,24 +269,30 @@ async function handleUpload(file) {
     const extension = file.name.split('.').pop()
     const key = `public/avatars/${user.value.id || uuid()}.${extension}`
 
-    const uploadTask = uploadData({ path: key, data: file, options: { contentType: file.type } })
+    const uploadTask = uploadData({
+      path: key,
+      data: file,
+      options: { contentType: file.type }
+    })
     const result = await uploadTask.result
 
-    const { url } = await getUrl({
-      path: result.path,
-      options: { level: 'protected', validateObjectExistence: true, expiresIn: 3600 }
-    })
-
-    user.value.avatar = url
-
+    // 👇 Mise à jour dans DynamoDB : uniquement le `key`
     await post({
       apiName: 'users',
       path: '/updateUser',
       options: { body: { avatar: key } }
     })
 
+    // 👇 On récupère maintenant la vraie URL d’affichage
+    const { url } = await getUrl({
+      path: key,
+      options: { level: 'public', validateObjectExistence: true, expiresIn: 3600 }
+    })
+
+    user.value.avatar = url
     message.success("✅ Avatar mis à jour !")
-  } catch {
+  } catch (err) {
+    console.error('[handleUpload] error:', err)
     message.error('❌ Erreur lors de l’upload')
   } finally {
     uploading.value = false
@@ -314,61 +300,8 @@ async function handleUpload(file) {
 
   return false
 }
-
-async function handleAddAddress() {
-  addressRequired.value = true
-  try {
-    const payload = { ...newAddress.value }
-    if (!payload.street || !payload.city || !payload.zipCode || !payload.country)
-      return message.warning("Tous les champs doivent être remplis.")
-
-    addingAddress.value = true
-    const res = await post({ apiName: 'users', path: '/addAdress', options: { body: payload } })
-    const { body } = await res.response
-    const data = await body.json()
-
-    addresses.value.push(data.address)
-    Object.keys(newAddress.value).forEach(k => newAddress.value[k] = '')
-
-    message.success("✅ Adresse ajoutée !")
-  } catch {
-    message.error("❌ Erreur lors de l'ajout.")
-  } finally {
-    addingAddress.value = false
-  }
-}
-
-async function handleDeleteAddress(id) {
-  try {
-    deletingId.value = id
-    const res = await post({
-      apiName: 'users',
-      path: '/deleteAdress',
-      options: { body: { id } }
-    })
-
-    const { body } = await res.response
-    const data = await body.json()
-
-    addresses.value = addresses.value.filter(addr => addr.address_id !== id)
-    message.success(data.message || "✅ Supprimée avec succès.")
-  } catch {
-    message.error("❌ Erreur lors de la suppression.")
-  } finally {
-    deletingId.value = null
-  }
-}
-
-watch(gender, val => {
-  user.value.gender = val === 'Autre' ? customGender.value : val
-})
-
-watch(customGender, val => {
-  if (gender.value === 'Autre') {
-    user.value.gender = val
-  }
-})
 </script>
+
 
 <style scoped>
 .max-w-2xl {
