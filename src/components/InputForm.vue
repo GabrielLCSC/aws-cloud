@@ -36,6 +36,7 @@ export default {
   computed: {
     inputValue: {
       get() {
+        console.log({test: this.modelValue})
         return this.modelValue;
       },
       set(val) {

@@ -6,6 +6,15 @@
       <LogoutButton />
     </div>
 
+    <div class="w-full mb-6 text-center">
+      <router-link
+        to="/apod"
+        class="inline-block px-5 py-3 text-sm font-medium transition rounded-lg bg-[#A3E583] text-black hover:bg-[#c2f4a6]"
+      >
+        Découvre l'image du jour de la NASA
+      </router-link>
+    </div>
+
     <a-spin :spinning="loadingUser" tip="Chargement du profil...">
       <a-form layout="vertical">
         <!-- Avatar -->
@@ -31,12 +40,14 @@
         v-model="user.firstName"
         type="text"
         text="Prénom"
+        :required="false"
       />
 
       <InputForm 
         v-model="user.lastName"
         type="text"
         text="Nom"
+        :required="false"
       />
       
       <InputForm 
@@ -60,6 +71,7 @@
         format="DD/MM/YYYY"
         type="date"
         text="Date"
+        :required="false"
       />
         </a-form-item>
 
@@ -73,21 +85,23 @@
     </a-radio-group>
     <div v-if="gender === 'Autre'" class="mt-2">
       <InputForm 
-        v-model:value="user.customGender"
+        v-model="user.customGender"
         type="text"
         text="Votre genre"
+        :required="false"
       />    
     </div>
   </a-form-item>
 
         <InputForm 
-        v-model:value="user.politicalSide"
+        v-model="user.politicalSide"
         type="text"
+        :required="false"
         text="Orientation politique"/>
 
         <InputForm 
-        v-model:value="user.size"
-        type="number"
+        v-model="user.size"
+        :required="false"
         text="Taille (cm)"
 
         :min="0" 
@@ -98,24 +112,45 @@
         <a-divider>Adresses</a-divider>
 
         <!-- Nouvelle adresse -->
-        <a-form-item label="Ajouter une nouvelle adresse">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <InputForm v-model="newAddress.street" type="text" text="Rue"/>
-            <InputForm v-model="newAddress.city" type="text" text="Ville"/>
-            <InputForm v-model="newAddress.zipCode" type="text" text="Code postal"/>
-            <InputForm v-model="newAddress.country" type="text" text="Pays"/>
+        <!-- Bloc d’ajout d’adresse -->
+<a-form-item label="Ajouter une nouvelle adresse">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <InputForm
+      v-model="newAddress.street"
+      type="text"
+      text="Rue"
+      :required="addressRequired"
+    />
+    <InputForm
+      v-model="newAddress.city"
+      type="text"
+      text="Ville"
+      :required="addressRequired"
+    />
+    <InputForm
+      v-model="newAddress.zipCode"
+      type="text"
+      text="Code postal"
+      :required="addressRequired"
+    />
+    <InputForm
+      v-model="newAddress.country"
+      type="text"
+      text="Pays"
+      :required="addressRequired"
+    />
+  </div>
+  <a-button
+    class="mt-2 customAjouterAdress"
+    type="dashed"
+    @click="handleAddAddress"
+    :loading="addingAddress"
+    block
+  >
+    Ajouter l'adresse
+  </a-button>
+</a-form-item>
 
-          </div>
-          <a-button
-            class="mt-2 customAjouterAdress"
-            type="dashed"
-            @click="handleAddAddress"
-            :loading="addingAddress"
-            block
-          >
-            Ajouter l'adresse
-          </a-button>
-        </a-form-item>
 
         <!-- Liste des adresses -->
         <div v-if="addresses.length" class="space-y-2">
@@ -165,6 +200,7 @@ const uploading = ref(false)
 const addingAddress = ref(false)
 const deletingId = ref(null)
 
+const addressRequired = ref(false)
 const addresses = ref([])
 const newAddress = ref({ street: '', city: '', zipCode: '', country: '' })
 
@@ -175,7 +211,7 @@ const user = ref({
   birthDate: "",
   gender: "",
   politicalSide: "",
-  size: 0,
+  size: '0',
   avatar: null,
 })
 
@@ -216,7 +252,12 @@ onMounted(async () => {
     console.log({data})
 
     addresses.value = data.addresses || []
-    user.value = data
+    user.value = {
+  ...user.value,
+  ...data, // écrase les props initialisées
+  birthDate: data.birthDate ? dayjs(data.birthDate).format('YYYY-MM-DD') : '',
+  size: data.size.toString()
+}
     gender.value = data.gender || ''
     
     if (data.gender && !['Homme', 'Femme', 'Non précisé'].includes(data.gender)) {
@@ -242,6 +283,8 @@ async function handleUpdate() {
       politicalSide: user.value.politicalSide,
       size: user.value.size
     }
+
+    console.log({payload})
 
     const response = await post({
       apiName: 'users',
@@ -292,6 +335,7 @@ async function handleUpload(file) {
 }
 
 async function handleAddAddress() {
+  addressRequired.value = true
   try {
     const payload = { ...newAddress.value }
     if (!payload.street || !payload.city || !payload.zipCode || !payload.country)

@@ -14,10 +14,18 @@ def response(status_code, body):
         "body": json.dumps(body)
     }
 
+def delete_all_items():
+    scan = table.scan()
+    with table.batch_writer() as batch:
+        for item in scan.get('Items', []):
+            batch.delete_item(Key={'date': item['date']})
+
 def handler(event, context):
     try:
-        print("[updateApodData] Fetching APOD data from NASA API")
+        print("[updateApodData] Suppression des anciennes données")
+        delete_all_items()
 
+        print("[updateApodData] Récupération des données depuis l'API NASA")
         with urllib.request.urlopen('https://api.nasa.gov/planetary/apod?api_key=JmRKWvgaqZrhhPKGXSkZTr5szS1nRcLzORfQZhgZ') as res:
             raw_data = res.read()
             apod = json.loads(raw_data)
@@ -32,8 +40,7 @@ def handler(event, context):
             'copyright': apod.get('copyright', 'NASA')
         }
 
-        print(f"[updateApodData] Formatted item: {item}")
-
+        print(f"[updateApodData] Ajout du nouvel objet : {item}")
         table.put_item(Item=item)
 
         return response(200, {"message": "✅ Donnée APOD mise à jour avec succès.", "data": item})
