@@ -6,6 +6,7 @@
         v-model="inputValue"
         :type="type"
         class="textInput"
+        feat-register-style
         :required="required"
         :disabled="disabled"
       />

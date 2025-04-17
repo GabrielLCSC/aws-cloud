@@ -28,20 +28,28 @@
 
     <!-- Formulaire -->
     <a-form layout="vertical">
-      <a-form-item label="Prénom">
-        <a-input v-model:value="user.firstName" />
-      </a-form-item>
 
-      <a-form-item label="Nom">
-        <a-input v-model:value="user.lastName" />
-      </a-form-item>
+      <InputForm 
+        v-model:value="user.firstName"
+        type="text"
+        text="Prénom"
+      />
 
-      <a-form-item label="Email">
-        <a-input v-model:value="user.email" type="email" />
-      </a-form-item>
+      <InputForm 
+        v-model:value="user.lastName"
+        type="text"
+        text="Nom"
+      />
+      
+      <InputForm 
+        v-model:value="user.email"
+        type="email"
+        text="Email"
+        :disabled="true"
+        />
 
-      <a-divider>Informations supplémentaires</a-divider>
-
+        <h2 class="text-white text-2xl font-semibold">Informations supplémentaires</h2>
+        
       <a-form-item label="Date de naissance">
         <a-date-picker
           v-model:value="user.birthDate"
