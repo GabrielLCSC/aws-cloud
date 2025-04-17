@@ -3,6 +3,8 @@ import boto3
 import os
 from moto import mock_aws
 from decimal import Decimal
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../amplify/backend/function/getUser/src'))
 from index import handler
 
 @pytest.fixture
