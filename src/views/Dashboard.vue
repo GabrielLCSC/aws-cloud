@@ -182,15 +182,22 @@ const user = ref({
 const gender = ref('')
 const customGender = ref('')
 
+console.log({loadingUser: loadingUser.value})
+
+
 onMounted(async () => {
   try {
+    loadingUser.value = true
     const session = await fetchAuthSession()
     const accessToken = session.tokens?.accessToken?.toString()
     if (!accessToken) return message.error('Utilisateur non connecté')
-
+    
     const response = await get({ apiName: 'users', path: '/getUser' })
+    
     const { body } = await response.response
+    
     const data = await body.json()
+    loadingUser.value = false
 
     if (data.birthDate) data.birthDate = dayjs(data.birthDate)
 
@@ -211,12 +218,15 @@ onMounted(async () => {
     addresses.value = data.addresses || []
     user.value = data
     gender.value = data.gender || ''
+    
     if (data.gender && !['Homme', 'Femme', 'Non précisé'].includes(data.gender)) {
       customGender.value = data.gender
     }
+    loadingUser.value = false
   } catch {
     message.error("Impossible de charger le profil utilisateur.")
   } finally {
+    console.log('wesh')
     loadingUser.value = false
   }
 })

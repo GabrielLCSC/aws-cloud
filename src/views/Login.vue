@@ -30,10 +30,6 @@
 import { signIn } from '@aws-amplify/auth'
 import { message } from 'ant-design-vue'
 import { useRouter } from 'vue-router';
-import LoginButton from '../components/LoginButton.vue'
-import InputForm from '@/components/InputForm.vue';
-
-const router = useRouter()
 
 export default {
   data() {
