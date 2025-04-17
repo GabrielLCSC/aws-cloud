@@ -1,41 +1,25 @@
 <template>
-  <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="relative z-10 min-vh-100 d-flex align-items-center justify-content-center">
     <div class="w-100 px-3" style="max-width: 500px">
-      <div class="bg-white p-4 rounded shadow">
-        <h2 class="text-center mb-4">Créer un compte</h2>
+      <div class="background-color p-4 rounded shadow">
+        <div class="flex items-center justify-center gap-2 text-white mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-4-4l4-4m0 0l-4-4m4 4H3" />
+        </svg>
+        <h2 class="text-xl font-semibold">Créer un compte</h2>
+      </div>
 
         <a-form @submit.prevent="handleSubmit" layout="vertical">
-          <a-form-item label="Email">
-            <a-input v-model:value="form.email" type="email" required />
-          </a-form-item>
-
-          <a-form-item label="Nom">
-            <a-input v-model:value="form.lastName" type="text" required />
-          </a-form-item>
-
-          <a-form-item label="Prénom">
-            <a-input v-model:value="form.firstName" type="text" required />
-          </a-form-item>
-
-          <a-form-item label="Mot de passe">
-            <a-input-password v-model:value="form.password" required />
-          </a-form-item>
-
-          <a-form-item label="Confirmer le mot de passe">
-            <a-input-password v-model:value="form.confirmPassword" required />
-          </a-form-item>
-
-          <a-button
-            type="primary"
-            html-type="submit"
-            class="w-100"
-            :loading="loading"
-          >
-            Créer un compte
-          </a-button>
+          <InputForm v-model="email" type="email" text="Email" />
+          <InputForm v-model:value="form.lastName" type="text" text="Nom" />
+          <InputForm v-model:value="form.firstName" type="text" text="Prénom" />
+          <InputForm v-model="password" type="password" text="Mot de passe" />
+          <InputForm v-model:value="form.confirmPassword" type="password" text="Mot de passe" />
+          <LoginButton type="primary"
+            html-type="submit" text="Créer un compte" class="mt-4" :loading="loading" />
         </a-form>
 
-        <p class="mt-3 text-center">
+        <p class="text-white mt-3 text-center">
           Déjà un compte ?
           <router-link to="/login" class="text-primary text-decoration-none ms-1">
             Connecte-toi
@@ -51,6 +35,8 @@ import { reactive, ref } from 'vue'
 import { signUp } from '@aws-amplify/auth'
 import { message } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
+import InputForm from '@/components/InputForm.vue'
+import LoginButton from '@/components/LoginButton.vue'
 
 const router = useRouter()
 
@@ -106,3 +92,8 @@ async function handleSubmit() {
   }
 }
 </script>
+<style scoped>
+  .background-color {
+    background-color: #131313;
+  }
+</style>

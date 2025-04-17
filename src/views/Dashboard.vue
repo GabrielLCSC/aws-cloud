@@ -180,41 +180,6 @@ async function handleUpdate() {
   }
 }
 
-
-async function handleUpdate() {
-  updating.value = true
-
-  try {
-    const payload = {
-      firstName: user.value.firstName,
-      lastName: user.value.lastName,
-      birthDate: user.value.birthDate,
-      gender: user.value.gender,
-      politicalSide: user.value.politicalSide,
-      size: user.value.size
-    }
-
-    const response = await post({
-      apiName: 'users',
-      path: '/updateUser',
-      options: {
-        body: payload
-      }
-    })
-
-    const { body } = await response.response
-    const data = await body.json()
-
-    message.success(data.message || '✅ Profil mis à jour !')
-
-  } catch (error) {
-    console.error('[UPDATE ERROR]', error)
-    message.error("❌ Impossible de mettre à jour le profil.")
-  } finally {
-    updating.value = false
-  }
-}
-
 watch(gender, (val) => {
   user.value.gender = val === 'Autre' ? customGender.value : val
 })

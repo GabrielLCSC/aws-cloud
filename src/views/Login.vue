@@ -2,17 +2,17 @@
     <div class="relative z-10 min-vh-100 d-flex align-items-center justify-content-center">
     <div class="w-100 px-3" style="max-width: 500px">
       <div class="background-color p-4 rounded shadow">
-        <div class="flex items-center justify-center gap-2 text-white mb-4">
-  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-4-4l4-4m0 0l-4-4m4 4H3" />
-  </svg>
-  <h2 class="text-xl font-semibold">Connexion</h2>
-</div>
+      <div class="flex items-center justify-center gap-2 text-white mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4m-4-4l4-4m0 0l-4-4m4 4H3" />
+        </svg>
+        <h2 class="text-xl font-semibold">Connexion</h2>
+      </div>
 
         <form @submit.prevent="handleLogin">
           <InputForm v-model="email" type="email" text="Email" />
           <InputForm v-model="password" type="password" text="Mot de passe" />
-          <LoginButton class="mt-4" :loading="loading" />
+          <LoginButton text="Se connecter" class="mt-4" :loading="loading" />
         </form>
 
         <p class="text-white mt-3 text-center">
