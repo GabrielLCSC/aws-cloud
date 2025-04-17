@@ -10,11 +10,11 @@
       </div>
 
         <a-form @submit.prevent="handleSubmit" layout="vertical">
-          <InputForm v-model="email" type="email" text="Email" />
-          <InputForm v-model:value="form.lastName" type="text" text="Nom" />
-          <InputForm v-model:value="form.firstName" type="text" text="Prénom" />
-          <InputForm v-model="password" type="password" text="Mot de passe" />
-          <InputForm v-model:value="form.confirmPassword" type="password" text="Mot de passe" />
+          <InputForm v-model="form.email" type="email" text="Email" />
+          <InputForm v-model="form.lastName" type="text" text="Nom" />
+          <InputForm v-model="form.firstName" type="text" text="Prénom" />
+          <InputForm v-model="form.password" type="password" text="Mot de passe" />
+          <InputForm v-model="form.confirmPassword" type="password" text="Confirmer le mot de passe" />
           <LoginButton type="primary"
             html-type="submit" text="Créer un compte" class="mt-4" :loading="loading" />
         </a-form>
@@ -57,6 +57,17 @@ async function handleSubmit() {
   }
 
   loading.value = true
+  console.log({
+      username: form.email,
+      password: form.password,
+      options: {
+        userAttributes: {
+          email: form.email,
+          name: form.firstName,
+          family_name: form.lastName
+        },
+      }
+    })
 
   try {
     
@@ -72,7 +83,7 @@ async function handleSubmit() {
       }
     })
 
-
+    
     message.success('🎉 Compte créé avec succès ! Redirection…')
     router.push({ path: '/confirm', query: { email: form.email } })
   } catch (err) {
