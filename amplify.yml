@@ -7,6 +7,10 @@ frontend:
     build:
       commands:
         - npm run build
+    test:
+      commands:
+        - echo "Running frontend tests..."
+        - npm run test
   artifacts:
     baseDirectory: dist
     files:
@@ -27,9 +31,12 @@ backend:
         - export PATH="/usr/local/python3.13/bin:$PATH"
         - pip3 install --user pipenv
         - export PATH=$PATH:/root/.local/bin
+        - pipenv install --dev
         - amplifyPush --simple
     build:
       commands:
+        - echo "Running backend tests..."
+        - pipenv run pytest
         - amplifyPush --simple
         - echo "Building backend..."
   artifacts:
