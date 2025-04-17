@@ -28,9 +28,6 @@
       "Type": "String",
       "Default": "storagenasaapodStreamArn"
     },
-    "nasaApiKey": {
-      "Type": "String"
-    },
     "nasaApiUrl": {
       "Type": "String"
     }
@@ -96,9 +93,6 @@
             },
             "STORAGE_NASAAPOD_STREAMARN": {
               "Ref": "storagenasaapodStreamArn"
-            },
-            "NASA_API_KEY": {
-              "Ref": "nasaApiKey"
             },
             "NASA_API_URL": {
               "Ref": "nasaApiUrl"
