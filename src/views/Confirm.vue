@@ -1,29 +1,31 @@
 <template>
-    <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="min-vh-100 d-flex align-items-center justify-content-center">
       <div class="w-100 px-3" style="max-width: 500px">
-        <div class="bg-white p-4 rounded shadow">
-          <h2 class="text-center mb-4">Confirmation de compte</h2>
+        <div class="z-10 relative text-white bg-[#131313] p-4 rounded shadow">
+          <h2 class="text-2xl flex items-center justify-center gap-2 mb-4 text-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-green-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          Confirmation de compte
+        </h2>
   
           <form @submit.prevent="handleConfirm">
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input v-model="email" type="email" class="form-control" required />
-            </div>
-  
-            <div class="mb-3">
-              <label class="form-label">Code de confirmation</label>
-              <input v-model="code" type="text" class="form-control" required />
-            </div>
-  
-            <button type="submit" class="btn btn-success w-100" :disabled="loading">
-              <span v-if="loading">Confirmation...</span>
-              <span v-else>Confirmer mon compte</span>
-            </button>
+            <InputForm v-model="email" type="email" text="Email" />
+            <InputForm v-model="code" type="text" text="Code de confirmation" />
+            
+            <LoginButton type="submit" text="Confirmer mon compte" class="mt-4" :loading="loading" />
           </form>
   
           <p class="text-center mt-3">
             Pas reçu de code ?
-            <a href="#" @click.prevent="resendCode">Renvoyer le code</a>
+            <a class="underline underline-offset-2" href="#" @click.prevent="resendCode">Renvoyer le code</a>
           </p>
         </div>
       </div>
@@ -33,6 +35,7 @@
   <script>
   import { confirmSignUp, resendSignUpCode } from '@aws-amplify/auth'
   import { message } from 'ant-design-vue'
+  import InputForm from '@/components/InputForm.vue'
   
   export default {
     data() {
