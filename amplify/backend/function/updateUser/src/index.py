@@ -29,7 +29,7 @@ def handler(event, context):
         if not user_id:
             return response(401, {"message": "Utilisateur non authentifié."})
 
-        allowed_fields = ['firstName', 'lastName', 'birthDate', 'gender', 'politicalSide', 'size']
+        allowed_fields = ['firstName', 'lastName', 'birthDate', 'gender', 'politicalSide', 'size', 'avatar']
         update_fields = {k: v for k, v in body.items() if k in allowed_fields}
 
         if not update_fields:

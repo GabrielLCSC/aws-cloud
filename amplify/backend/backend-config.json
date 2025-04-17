@@ -1,5 +1,19 @@
 {
   "api": {
+    "nasa": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "getApodData"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "users": {
       "dependsOn": [
         {
@@ -25,6 +39,22 @@
           ],
           "category": "function",
           "resourceName": "updateUser"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "addAdress"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "deleteAdress"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -72,6 +102,22 @@
     }
   },
   "function": {
+    "addAdress": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "addresses"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "bigdevops473ea6abPostConfirmation": {
       "build": true,
       "dependsOn": [
@@ -81,6 +127,38 @@
           ],
           "category": "function",
           "resourceName": "insertUser"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "deleteAdress": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "addresses"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "getApodData": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "nasaapod"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -97,6 +175,15 @@
           ],
           "category": "storage",
           "resourceName": "users"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "addresses"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -113,6 +200,22 @@
           ],
           "category": "storage",
           "resourceName": "users"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "updateApodData": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "nasaapod"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -136,6 +239,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_addAdress_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addAdress"
+        }
+      ]
+    },
+    "AMPLIFY_function_addAdress_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addAdress"
+        }
+      ]
+    },
     "AMPLIFY_function_bigdevops473ea6abPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
@@ -149,6 +268,38 @@
         {
           "category": "function",
           "resourceName": "bigdevops473ea6abPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteAdress_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteAdress"
+        }
+      ]
+    },
+    "AMPLIFY_function_deleteAdress_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "deleteAdress"
+        }
+      ]
+    },
+    "AMPLIFY_function_getApodData_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getApodData"
+        }
+      ]
+    },
+    "AMPLIFY_function_getApodData_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getApodData"
         }
       ]
     },
@@ -184,6 +335,30 @@
         }
       ]
     },
+    "AMPLIFY_function_updateApodData_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateApodData"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateApodData_nasaApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateApodData"
+        }
+      ]
+    },
+    "AMPLIFY_function_updateApodData_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "updateApodData"
+        }
+      ]
+    },
     "AMPLIFY_function_updateUser_deploymentBucketName": {
       "usedBy": [
         {
@@ -202,6 +377,19 @@
     }
   },
   "storage": {
+    "addresses": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "medias": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    },
+    "nasaapod": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "users": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"

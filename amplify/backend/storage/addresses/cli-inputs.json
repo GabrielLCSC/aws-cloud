@@ -1,0 +1,26 @@
+{
+  "resourceName": "addresses",
+  "tableName": "addresses",
+  "partitionKey": {
+    "fieldName": "address_id",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "user_id",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "user_ids",
+      "partitionKey": {
+        "fieldName": "user_id",
+        "fieldType": "string"
+      },
+      "sortKey": {
+        "fieldName": "address_id",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": []
+}
