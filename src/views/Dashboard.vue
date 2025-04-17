@@ -28,20 +28,28 @@
 
     <!-- Formulaire -->
     <a-form layout="vertical">
-      <a-form-item label="Prénom">
-        <a-input v-model:value="user.firstName" />
-      </a-form-item>
 
-      <a-form-item label="Nom">
-        <a-input v-model:value="user.lastName" />
-      </a-form-item>
+      <InputForm 
+        v-model:value="user.firstName"
+        type="text"
+        text="Prénom"
+      />
 
-      <a-form-item label="Email">
-        <a-input v-model:value="user.email" type="email" />
-      </a-form-item>
+      <InputForm 
+        v-model:value="user.lastName"
+        type="text"
+        text="Nom"
+      />
+      
+      <InputForm 
+        v-model:value="user.email"
+        type="email"
+        text="Email"
+        :disabled="true"
+        />
 
-      <a-divider>Informations supplémentaires</a-divider>
-
+        <h2 class="text-white text-2xl font-semibold">Informations supplémentaires</h2>
+        
       <a-form-item label="Date de naissance">
         <a-date-picker
           v-model:value="user.birthDate"
@@ -145,40 +153,6 @@ onMounted(async () => {
     message.error("Impossible de charger le profil utilisateur.")
   }
 })
-
-async function handleUpdate() {
-  updating.value = true
-
-  try {
-    const payload = {
-      firstName: user.value.firstName,
-      lastName: user.value.lastName,
-      birthDate: user.value.birthDate,
-      gender: user.value.gender,
-      politicalSide: user.value.politicalSide,
-      size: user.value.size
-    }
-
-    const response = await post({
-      apiName: 'users',
-      path: '/updateUser',
-      options: {
-        body: payload
-      }
-    })
-
-    const { body } = await response.response
-    const data = await body.json()
-
-    message.success(data.message || '✅ Profil mis à jour !')
-
-  } catch (error) {
-    console.error('[UPDATE ERROR]', error)
-    message.error("❌ Impossible de mettre à jour le profil.")
-  } finally {
-    updating.value = false
-  }
-}
 
 
 async function handleUpdate() {

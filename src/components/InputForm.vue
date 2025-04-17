@@ -7,7 +7,6 @@
         :type="type"
         class="textInput"
         required
-        placeholder="Ecrire"
         :disabled="disabled"
       />
     </div>
