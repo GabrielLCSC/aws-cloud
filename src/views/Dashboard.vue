@@ -168,14 +168,14 @@ const addresses = ref([])
 const newAddress = ref({ street: '', city: '', zipCode: '', country: '' })
 
 const user = ref({
-  firstName: '',
-  lastName: '',
+  firstName: 'alban',
+  lastName: 'de braquilanges',
   email: 'a@gmail.com',
-  birthDate: null,
-  gender: null,
-  politicalSide: null,
-  size: null,
-  avatar: null
+  birthDate: 16./10/1998,
+  gender: "F",
+  politicalSide: "Droite",
+  size: 180,
+  avatar: null,
 })
 
 const gender = ref('')
