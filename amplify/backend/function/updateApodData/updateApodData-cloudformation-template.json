@@ -30,6 +30,9 @@
     },
     "nasaApiKey": {
       "Type": "String"
+    },
+    "nasaApiUrl": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -96,6 +99,9 @@
             },
             "NASA_API_KEY": {
               "Ref": "nasaApiKey"
+            },
+            "NASA_API_URL": {
+              "Ref": "nasaApiUrl"
             }
           }
         },

@@ -8,8 +8,8 @@ dynamodb = boto3.resource('dynamodb')
 table_name = os.environ.get('STORAGE_NASAAPOD_NAME')
 table = dynamodb.Table(table_name)
 
-NASA_API_KEY = os.environ.get('NASA_API_KEY', 'DEMO_KEY')
-NASA_API_URL = f'https://api.nasa.gov/planetary/apod?api_key={NASA_API_KEY}'
+# NASA_API_KEY = os.environ.get('NASA_API_KEY', 'DEMO_KEY')
+NASA_API_URL = f'https://api.nasa.gov/planetary/apod?api_key=JmRKWvgaqZrhhPKGXSkZTr5szS1nRcLzORfQZhgZ'
 
 def response(status_code, body):
     return {

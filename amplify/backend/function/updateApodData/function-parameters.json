@@ -14,6 +14,10 @@
     {
       "cloudFormationParameterName": "nasaApiKey",
       "environmentVariableName": "NASA_API_KEY"
+    },
+    {
+      "cloudFormationParameterName": "nasaApiUrl",
+      "environmentVariableName": "NASA_API_URL"
     }
   ]
 }
