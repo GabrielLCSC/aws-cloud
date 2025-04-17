@@ -1,5 +1,3 @@
-Bien sûr ! Voici un README complet, élégant et prêt à être copié-collé dans ton dépôt GitHub :
-
 # 🚀 AWS Cloud App - User Profile & NASA APOD Integration
 
 Bienvenue dans notre projet fullstack utilisant **AWS Amplify**, **Vue.js**, **DynamoDB**, et **Lambda**, conçu pour gérer des profils utilisateurs avec des adresses multiples, une page dédiée à la NASA "Astronomy Picture of the Day" (APOD), et une infrastructure de déploiement Dev/Prod complète.
@@ -85,4 +83,3 @@ Master 1 à l'IIM en IWID
 ---
 
 🎉 Merci d’avoir scrollé jusqu’ici, et bon voyage à travers le cloud et les étoiles !
-```
