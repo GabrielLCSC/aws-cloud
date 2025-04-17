@@ -48,7 +48,6 @@ export default {
       try {
         await signIn({ username: this.email, password: this.password });
         message.success(`Connected`);
-        console.log()
         this.$router.push('/')
       } catch (err) {
         console.error('[LOGIN ERROR]', err);

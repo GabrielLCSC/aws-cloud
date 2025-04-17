@@ -51,8 +51,6 @@
   
       const { body } = await res.response
       const data = await body.json()
-
-      console.log({data})
   
       apodData.value = Array.isArray(data) ? data : [data]
     } catch (error) {

@@ -218,58 +218,41 @@ const user = ref({
 const gender = ref('')
 const customGender = ref('')
 
-console.log({loadingUser: loadingUser.value})
-
-
 onMounted(async () => {
   try {
-    loadingUser.value = true
-    const session = await fetchAuthSession()
-    const accessToken = session.tokens?.accessToken?.toString()
-    if (!accessToken) return message.error('Utilisateur non connecté')
-    
-    const response = await get({ apiName: 'users', path: '/getUser' })
-    
-    const { body } = await response.response
-    
-    const data = await body.json()
-    loadingUser.value = false
+  
 
-    if (data.birthDate) data.birthDate = dayjs(data.birthDate)
+  const session = await fetchAuthSession()
+  const accessToken = session.tokens?.accessToken?.toString()
 
-    if (data.avatar) {
-      const { url } = await getUrl({
-        path: data.avatar,
-        options: {
-          level: 'public',
-          validateObjectExistence: true,
-          expiresIn: 3600
-        }
-      })
-      data.avatar = url
-    }
+  if (!accessToken) throw new Error('Utilisateur non connecté')
+  loadingUser.value = true
 
-    console.log({data})
+  const response = await get({ apiName: 'users', path: '/getUser' })
+  const { body } = await response.response
+  const data = await body.json()
 
-    addresses.value = data.addresses || []
-    user.value = {
-  ...user.value,
-  ...data, // écrase les props initialisées
-  birthDate: data.birthDate ? dayjs(data.birthDate).format('YYYY-MM-DD') : '',
-  size: data.size.toString()
-}
-    gender.value = data.gender || ''
-    
-    if (data.gender && !['Homme', 'Femme', 'Non précisé'].includes(data.gender)) {
-      customGender.value = data.gender
-    }
-    loadingUser.value = false
-  } catch {
-    message.error("Impossible de charger le profil utilisateur.")
-  } finally {
-    console.log('wesh')
-    loadingUser.value = false
+  addresses.value = Array.isArray(data.addresses) ? data.addresses : []
+
+  user.value = {
+    ...user.value,
+    ...data,
+    birthDate: data.birthDate ? dayjs(data.birthDate).format('YYYY-MM-DD') : '',
+    size: data.size ? String(data.size) : '0'
   }
+
+  gender.value = data.gender || ''
+  if (gender.value && !['Homme', 'Femme', 'Non précisé'].includes(gender.value)) {
+    customGender.value = gender.value
+  }
+
+} catch (err) {
+  console.error('[getUser] error:', err)
+  message.error("Impossible de charger le profil utilisateur.")
+} finally {
+  loadingUser.value = false
+}
+
 })
 
 async function handleUpdate() {
@@ -283,8 +266,6 @@ async function handleUpdate() {
       politicalSide: user.value.politicalSide,
       size: user.value.size
     }
-
-    console.log({payload})
 
     const response = await post({
       apiName: 'users',

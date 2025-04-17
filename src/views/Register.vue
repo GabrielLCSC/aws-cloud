@@ -57,17 +57,6 @@ async function handleSubmit() {
   }
 
   loading.value = true
-  console.log({
-      username: form.email,
-      password: form.password,
-      options: {
-        userAttributes: {
-          email: form.email,
-          name: form.firstName,
-          family_name: form.lastName
-        },
-      }
-    })
 
   try {
     
