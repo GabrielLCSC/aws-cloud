@@ -28,19 +28,19 @@
         </a-form-item>
 
         <InputForm 
-        v-model:value="user.firstName"
+        v-model="user.firstName"
         type="text"
         text="Prénom"
       />
 
       <InputForm 
-        v-model:value="user.lastName"
+        v-model="user.lastName"
         type="text"
         text="Nom"
       />
       
       <InputForm 
-        v-model:value="user.email"
+        v-model="user.email"
         type="email"
         text="Email"
         :disabled="true"
@@ -202,6 +202,8 @@ onMounted(async () => {
       })
       data.avatar = url
     }
+
+    console.log({data})
 
     addresses.value = data.addresses || []
     user.value = data

@@ -31,7 +31,7 @@ export default {
     text: {
       type: String,
     },
-    modelValue: String,
+    modelValue: [String, undefined, null],
   },
   computed: {
     inputValue: {

@@ -8,11 +8,7 @@ def custom_encoder(obj):
         return int(obj) if obj % 1 == 0 else float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
 
-dynamodb = boto3.resource('dynamodb')
-table_name = os.environ.get('STORAGE_USERS_NAME', 'users')
-table = dynamodb.Table(table_name)
-addresses_table_name = os.environ.get('STORAGE_ADDRESSES_NAME', 'asdresses')
-addresses_table = dynamodb.Table(addresses_table_name)
+
 
 def response(status_code, body):
     return {
@@ -26,6 +22,11 @@ def response(status_code, body):
     }
 
 def handler(event, context):
+    dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
+    table_name = os.environ.get('STORAGE_USERS_NAME', 'users')
+    table = dynamodb.Table(table_name)
+    addresses_table_name = os.environ.get('STORAGE_ADDRESSES_NAME', 'asdresses')
+    addresses_table = dynamodb.Table(addresses_table_name)
     try:
         print("[getUser] Event received:", event)
 
