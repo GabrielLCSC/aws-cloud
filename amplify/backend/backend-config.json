@@ -343,14 +343,6 @@
         }
       ]
     },
-    "AMPLIFY_function_updateApodData_nasaApiKey": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "updateApodData"
-        }
-      ]
-    },
     "AMPLIFY_function_updateApodData_s3Key": {
       "usedBy": [
         {

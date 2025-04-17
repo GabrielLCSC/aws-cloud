@@ -8,9 +8,6 @@ dynamodb = boto3.resource('dynamodb')
 table_name = os.environ.get('STORAGE_NASAAPOD_NAME')
 table = dynamodb.Table(table_name)
 
-# NASA_API_KEY = os.environ.get('NASA_API_KEY', 'DEMO_KEY')
-NASA_API_URL = f'https://api.nasa.gov/planetary/apod?api_key=JmRKWvgaqZrhhPKGXSkZTr5szS1nRcLzORfQZhgZ'
-
 def response(status_code, body):
     return {
         "statusCode": status_code,
@@ -21,7 +18,7 @@ def handler(event, context):
     try:
         print("[updateApodData] Fetching APOD data from NASA API")
 
-        with urllib.request.urlopen(NASA_API_URL) as res:
+        with urllib.request.urlopen('https://api.nasa.gov/planetary/apod?api_key=JmRKWvgaqZrhhPKGXSkZTr5szS1nRcLzORfQZhgZ') as res:
             raw_data = res.read()
             apod = json.loads(raw_data)
 
