@@ -63,26 +63,34 @@
 
         <!-- Genre -->
         <a-form-item label="Genre">
-          <a-radio-group v-model:value="gender">
-            <a-radio value="Homme">Homme</a-radio>
-            <a-radio value="Femme">Femme</a-radio>
-            <a-radio value="Non précisé">Non précisé</a-radio>
-            <a-radio value="Autre">Autre</a-radio>
-          </a-radio-group>
-          <div v-if="gender === 'Autre'" class="mt-2">
-            <a-input v-model:value="customGender" placeholder="Votre genre" />
-          </div>
-        </a-form-item>
+    <a-radio-group v-model:value="gender" class="custom-radio-group">
+      <a-radio value="Homme">Homme</a-radio>
+      <a-radio value="Femme">Femme</a-radio>
+      <a-radio value="Non précisé">Non précisé</a-radio>
+      <a-radio value="Autre">Autre</a-radio>
+    </a-radio-group>
+    <div v-if="gender === 'Autre'" class="mt-2">
+      <InputForm 
+        v-model:value="user.customGender"
+        type="text"
+        text="Votre genre"
+      />    
+    </div>
+  </a-form-item>
 
-        <!-- Orientation politique -->
-        <a-form-item label="Orientation politique">
-          <a-input v-model:value="user.politicalSide" />
-        </a-form-item>
+        <InputForm 
+        v-model:value="user.politicalSide"
+        type="text"
+        text="Orientation politique"/>
 
-        <!-- Taille -->
-        <a-form-item label="Taille (cm)">
-          <a-input-number v-model:value="user.size" :min="0" style="width: 100%" />
-        </a-form-item>
+        <InputForm 
+        v-model:value="user.size"
+        type="number"
+        text="Taille (cm)"
+
+        :min="0" 
+        style="width: 100%"
+      />
 
         <!-- Divider -->
         <a-divider>Adresses</a-divider>
@@ -90,13 +98,14 @@
         <!-- Nouvelle adresse -->
         <a-form-item label="Ajouter une nouvelle adresse">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a-input v-model:value="newAddress.street" placeholder="Rue" />
-            <a-input v-model:value="newAddress.city" placeholder="Ville" />
-            <a-input v-model:value="newAddress.zipCode" placeholder="Code Postal" />
-            <a-input v-model:value="newAddress.country" placeholder="Pays" />
+            <InputForm v-model:value="newAddress.street" type="text" text="Rue"/>
+            <InputForm v-model:value="newAddress.city" type="text" text="Ville"/>
+            <InputForm v-model:value="newAddress.zipCode" type="text" text="Code postal"/>
+            <InputForm v-model:value="newAddress.country" type="text" text="Pays"/>
+
           </div>
           <a-button
-            class="mt-2"
+            class="mt-2 customAjouterAdress"
             type="dashed"
             @click="handleAddAddress"
             :loading="addingAddress"
@@ -129,9 +138,8 @@
         </div>
 
         <!-- Bouton de sauvegarde -->
-        <a-button type="primary" block @click="handleUpdate" :loading="updating">
-          Enregistrer
-        </a-button>
+        <LoginButton text="Enregistrer" :loading="updating" @click="handleUpdate"/>
+
       </a-form>
     </a-spin>
   </div>
@@ -334,8 +342,11 @@ watch(customGender, val => {
 
 
 *, body{
-  /* color: white !important; */
+  color: white !important;
+
+  
 }
+
 
 /* .readonly-style {
   pointer-events: none;
