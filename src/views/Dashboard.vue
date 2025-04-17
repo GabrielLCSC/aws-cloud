@@ -54,11 +54,13 @@
 
         <!-- Date de naissance -->
         <a-form-item label="Date de naissance">
-          <a-date-picker
-            v-model:value="user.birthDate"
-            format="DD/MM/YYYY"
-            style="width: 100%"
-          />
+
+          <InputForm 
+        v-model="user.birthDate"
+        format="DD/MM/YYYY"
+        type="date"
+        text="Date"
+      />
         </a-form-item>
 
         <!-- Genre -->
@@ -168,7 +170,7 @@ const newAddress = ref({ street: '', city: '', zipCode: '', country: '' })
 const user = ref({
   firstName: '',
   lastName: '',
-  email: '',
+  email: 'a@gmail.com',
   birthDate: null,
   gender: null,
   politicalSide: null,
@@ -345,8 +347,10 @@ watch(customGender, val => {
 
 *, body{
   color: white !important;
+}
 
-  
+.customAjouterAdress{
+  background-color: #A3E583;
 }
 
 
